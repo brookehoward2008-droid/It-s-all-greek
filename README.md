@@ -29,15 +29,44 @@ Nexus must label each panel as one of the following:
 
 No panel should pretend static data is live.
 
-## Run in GitHub Codespaces
+## Auto-run in GitHub Codespaces
 
-Open the repo in Codespaces, then run:
+This branch includes:
 
-```bash
-python3 -m http.server 8787
+```text
+.devcontainer/devcontainer.json
+.devcontainer/start-nexus.sh
 ```
 
-Open the forwarded port `8787` from the Codespaces **Ports** tab.
+When the Codespace starts on this branch, the devcontainer runs:
+
+```bash
+bash .devcontainer/start-nexus.sh
+```
+
+That script starts:
+
+```bash
+python3 -m http.server 8787 --bind 0.0.0.0
+```
+
+Codespaces should then auto-forward port `8787` and label it **Nexus Command Center**.
+
+Open the forwarded port from the Codespaces **Ports** tab.
+
+## Manual run in GitHub Codespaces
+
+If auto-run does not start because the Codespace was created before this branch had a devcontainer, run:
+
+```bash
+bash .devcontainer/start-nexus.sh
+```
+
+Or run the server directly:
+
+```bash
+python3 -m http.server 8787 --bind 0.0.0.0
+```
 
 ## Run locally on Windows
 
