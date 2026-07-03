@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Nexus Winnings v3</title>
+<style>
+  :root{
+    --bg:#050814;
+    --panel:#0d1324;
+    --text:#dce7ff;
+    --muted:#93a4d1;
+    --line:#1f2a4d;
+    --accent:#53ffe0;
+    --accent2:#7f8cff;
+    --good:#7dffb1;
+    --warn:#ffd36e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top,#111833 0,#060915 45%,#03050c 100%);color:var(--text)}
+  header{padding:28px 20px 16px;border-bottom:1px solid var(--line);background:rgba(6,9,21,.75);backdrop-filter:blur(10px);position:sticky;top:0;z-index:5}
+  .title{max-width:1200px;margin:0 auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(28px,5vw,52px);letter-spacing:.08em}
+  .sub{color:var(--muted);max-width:700px;line-height:1.4}
+  main{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .card{grid-column:span 4;background:linear-gradient(180deg,rgba(13,19,36,.95),rgba(8,13,25,.95));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .wide{grid-column:span 6}
+  .full{grid-column:1/-1}
+  h2{font-size:17px;margin:0 0 10px}
+  p{margin:0 0 10px;color:var(--muted);line-height:1.45}
+  .stat{font-size:28px;font-weight:700;letter-spacing:.04em;margin:6px 0 2px}
+  .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+  .list{display:grid;gap:10px;margin-top:12px}
+  .item{padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02)}
+  .item strong{display:block;margin-bottom:4px}
+  .tag{display:inline-block;padding:5px 8px;border-radius:999px;background:rgba(83,255,224,.1);border:1px solid rgba(83,255,224,.25);color:var(--accent);font-size:12px;margin:6px 6px 0 0}
+  .pill-good{color:var(--good)}
+  .pill-warn{color:var(--warn)}
+  .bar{height:10px;background:#0a1020;border-radius:999px;overflow:hidden;border:1px solid var(--line);margin-top:10px}
+  .bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:71%}
+  .footer{margin-top:20px;color:var(--muted);font-size:13px}
+  @media (max-width:900px){.card,.wide{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <div>
+      <h1>NEXUS WINNINGS V3</h1>
+      <div class="sub">Cleaned browser shell for the Nexus bundle. This is the main HTML launch target preserved from the project cleanup.</div>
+    </div>
+    <div class="tag">HTML branch</div>
+  </div>
+</header>
+<main>
+  <section class="grid">
+    <article class="card">
+      <div class="label">Wallet scan count</div>
+      <div class="stat">71</div>
+      <p>Tracked puzzle/scan placeholder retained from the cleaned shell.</p>
+      <div class="bar"><span></span></div>
+    </article>
+
+    <article class="card">
+      <div class="label">Status</div>
+      <div class="stat pill-good">ACTIVE</div>
+      <p>Browser build available. Python and heavier archive branches were intentionally kept separate from this publish.</p>
+    </article>
+
+    <article class="card">
+      <div class="label">Mode</div>
+      <div class="stat pill-warn">RESEARCH</div>
+      <p>This page is a cleaned shell artifact, not a live wallet, trading engine, or blockchain connector.</p>
+    </article>
+
+    <article class="card wide">
+      <h2>Tracked sections</h2>
+      <div class="list">
+        <div class="item"><strong>BTC puzzle lane</strong>Focused area for puzzle page references and scan progress.</div>
+        <div class="item"><strong>Quest / airdrop lane</strong>Collection space for research links, notes, and watch targets.</div>
+        <div class="item"><strong>Portfolio / winnings lane</strong>Visual shell for finance-style tracking cards and summaries.</div>
+      </div>
+    </article>
+
+    <article class="card wide">
+      <h2>Project notes</h2>
+      <p>The original bundle contained multiple HTML variants, local Python experiments, backup archives, and tool files. This browser page is the clearest top-level HTML direction from that set.</p>
+      <span class="tag">cleaned</span>
+      <span class="tag">master build</span>
+      <span class="tag">browser shell</span>
+    </article>
+
+    <article class="card full">
+      <h2>Reality check</h2>
+      <p>This repo is not an R Shiny app. The startup commands using <code>source("scripts/setup_renv.R")</code>, <code>renv::restore()</code>, and <code>shiny::runApp()</code> do not match this project structure.</p>
+      <div class="footer">Launch through the repository homepage or serve the folder locally with the included batch launcher.</div>
+    </article>
+  </section>
+</main>
+</body>
+</html>
