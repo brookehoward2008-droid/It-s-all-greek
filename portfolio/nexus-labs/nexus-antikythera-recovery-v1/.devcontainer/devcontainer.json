@@ -1,0 +1,11 @@
+{
+  "name": "NEXUS Antikythera Recovery",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "forwardPorts": [8731],
+  "portsAttributes": {
+    "8731": {
+      "label": "NEXUS Antikythera",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
