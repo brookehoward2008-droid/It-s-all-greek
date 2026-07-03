@@ -1,0 +1,62 @@
+# .github/workflows/github-pages.yml
+name: Deploy static site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate static files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Confirm required entry files
+        run: |
+          test -f index.html
+          test -d app
+          echo "Static entrypoint found: index.html"
+          echo "Application folder found: app/"
+
+      - name: List deploy payload
+        run: |
+          find . -maxdepth 3 -type f \
+            -not -path './.git/*' \
+            -not -path './.github/workflows/*' \
+            | sort
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
