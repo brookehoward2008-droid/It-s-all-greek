@@ -1,0 +1,8 @@
+# Render.com deployment configuration
+services:
+  - type: web
+    name: nexus-antikythera
+    env: python
+    plan: free
+    buildCommand: "pip install -r portfolio/nexus-labs/nexus-antikythera-recovery-v1/requirements.in"
+    startCommand: "cd portfolio/nexus-labs/nexus-antikythera-recovery-v1 && python -m uvicorn app:app --host 0.0.0.0 --port $PORT"
