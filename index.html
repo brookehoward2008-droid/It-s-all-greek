@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS MASTER BUILD</title>
+  <style>
+    :root{
+      --bg:#05070a; --panel:#0b1118; --line:#193041; --text:#d7f2ff; --muted:#7fa2b5; --accent:#00e5cc; --accent2:#00ff88;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top,#0d1721 0%, #05070a 45%, #020305 100%);color:var(--text)}
+    .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 40px}
+    h1{margin:0 0 10px;font-size:clamp(28px,5vw,48px);letter-spacing:.08em}
+    .sub{color:var(--muted);max-width:750px;line-height:1.5;margin-bottom:22px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .card{background:rgba(11,17,24,.9);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+    .card h2{font-size:18px;margin:0 0 10px}
+    .card p{color:var(--muted);line-height:1.45;font-size:14px;min-height:62px}
+    a.btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:12px;text-decoration:none;color:#031012;background:linear-gradient(90deg,var(--accent),var(--accent2));font-weight:700}
+    .path{font-family:Consolas,Monaco,monospace;color:#9ec9d9;font-size:12px;margin-top:10px;word-break:break-word}
+    .note{margin-top:20px;padding:14px 16px;background:#101923;border-left:4px solid var(--accent);border-radius:12px;color:var(--muted);line-height:1.5}
+    ul{margin:10px 0 0 18px;color:var(--muted)}
+    li{margin:6px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>NEXUS MASTER BUILD</h1>
+    <div class="sub">One homepage. One archive. One clean place to start. Open the main build from here, use the local Python branch when you need it, and keep all earlier experiments and backups parked in archive.</div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Main browser build</h2>
+        <p>Your current primary Nexus shell. This is the clean launch target for the HTML branch.</p>
+        <a class="btn" href="app/nexus-main-browser-v10.html">Open main build</a>
+        <div class="path">app/nexus-main-browser-v10.html</div>
+      </div>
+
+      <div class="card">
+        <h2>Archive</h2>
+        <p>Older browser versions, prototypes, research files, installers, and original bundles live here instead of being mixed into the working app.</p>
+        <a class="btn" href="docs/cleanup-report.md">Open cleanup report</a>
+        <div class="path">docs/cleanup-report.md</div>
+      </div>
+
+      <div class="card">
+        <h2>Local Python branch</h2>
+        <p>Desktop and agent experiments are not included yet in this GitHub publish. This repo currently ships the cleaned browser branch and documentation.</p>
+        <a class="btn" href="docs/README_FIRST.md">Open package notes</a>
+        <div class="path">docs/README_FIRST.md</div>
+      </div>
+
+      <div class="card">
+        <h2>Docs</h2>
+        <p>Readme, cleanup report, and inventory are grouped together so the project can still explain itself.</p>
+        <a class="btn" href="docs/README_FIRST.md">Open docs</a>
+        <div class="path">docs/README_FIRST.md</div>
+      </div>
+    </div>
+
+    <div class="note">
+      Best launch method: run the local server launcher in the <strong>launch</strong> folder, then open <strong>http://localhost:8080</strong>.<br><br>
+      This package is <strong>not</strong> an R Shiny project. The commands using <code>renv::restore()</code> and <code>shiny::runApp()</code> do not match the files in this build.
+    </div>
+
+    <ul>
+      <li>Main app branch: browser HTML</li>
+      <li>Included here: cleaned browser build and docs</li>
+      <li>Not yet published here: Python experiments and heavy archive bundles</li>
+    </ul>
+  </div>
+</body>
+</html>
