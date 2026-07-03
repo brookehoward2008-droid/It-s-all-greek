@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio Tracker - College Investigation</title>
+  <style>
+    :root {
+      --bg: #050814;
+      --panel: #0d1324;
+      --text: #dce7ff;
+      --muted: #93a4d1;
+      --line: #1f2a4d;
+      --accent: #53ffe0;
+      --accent2: #7f8cff;
+      --good: #7dffb1;
+      --warn: #ffd36e;
+      --error: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at top, #111833 0, #060915 45%, #03050c 100%);
+      color: var(--text);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+    header {
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .form-section {
+      background: rgba(13, 19, 36, 0.6);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    input, select, textarea {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 8px rgba(83, 255, 224, 0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #000;
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary {
+      background: rgba(127, 140, 255, 0.2);
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+    }
+    .btn-secondary:hover { background: rgba(127, 140, 255, 0.3); }
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.2);
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+    .btn-danger:hover { background: rgba(255, 107, 107, 0.3); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, rgba(83, 255, 224, 0.1), rgba(127, 140, 255, 0.1));
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 8px 0;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .alert.show { display: block; }
+    .alert.success {
+      background: rgba(125, 255, 177, 0.1);
+      border: 1px solid var(--good);
+      color: var(--good);
+    }
+    .alert.error {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid var(--error);
+      color: var(--error);
+    }
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(13, 19, 36, 0.6);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--line);
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+    tr:hover { background: rgba(83, 255, 224, 0.05); }
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      background: rgba(83, 255, 224, 0.2);
+      color: var(--accent);
+    }
+    .btn-sm {
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      background: rgba(127, 140, 255, 0.2);
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-sm:hover { background: rgba(127, 140, 255, 0.3); }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+    .empty-state p { margin: 12px 0; }
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Portfolio Tracker</h1>
+      <p class="subtitle">Secure blockchain portfolio investigation and tracking for academic research</p>
+    </header>
+
+    <div id="alert" class="alert"></div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Entries</div>
+        <div class="stat-value" id="totalCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Value Tracked</div>
+        <div class="stat-value" id="totalValue">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Categories</div>
+        <div class="stat-value" id="categoryCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last Updated</div>
+        <div class="stat-value" id="lastUpdate">—</div>
+      </div>
+    </div>
+
+    <!-- Data Entry Form -->
+    <div class="form-section">
+      <h2 style="margin-top: 0; margin-bottom: 20px;">Add Portfolio Entry</h2>
+      <form id="entryForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="walletAddr">Wallet Address</label>
+            <input 
+              id="walletAddr"
+              type="text" 
+              placeholder="0x... or bc1q..."
+              maxlength="200"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="">Select category...</option>
+              <option value="active">Active Wallet</option>
+              <option value="dormant">Dormant/Cold</option>
+              <option value="puzzle">Puzzle Wallet</option>
+              <option value="exchange">Exchange Address</option>
+              <option value="contract">Smart Contract</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount (BTC/ETH)</label>
+            <input 
+              id="amount"
+              type="number" 
+              placeholder="0.00"
+              step="0.00000001"
+              min="0"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="dateAdded">Date</label>
+            <input 
+              id="dateAdded"
+              type="date"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label for="notes">Notes / Research Findings</label>
+          <textarea 
+            id="notes"
+            placeholder="Add observations, transaction history, or investigation notes..."
+            maxlength="500"
+          ></textarea>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn-primary">Add Entry</button>
+          <button type="reset" class="btn-secondary">Clear Form</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Data Table -->
+    <div class="form-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="margin: 0;">Portfolio Entries</h2>
+        <div class="button-group">
+          <button id="exportBtn" class="btn-secondary">Export CSV</button>
+          <button id="clearAllBtn" class="btn-danger">Clear All</button>
+        </div>
+      </div>
+      <div class="table-container">
+        <div id="tablePlaceholder" class="empty-state">
+          <p>No entries yet. Add your first portfolio entry above.</p>
+        </div>
+        <table id="dataTable" style="display: none;">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Wallet Address</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Notes</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // ============================================
+    // SECURITY: Input Sanitization & Validation
+    // ============================================
+    const sanitize = (str) => {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    };
+
+    const validateWalletAddress = (addr) => {
+      // Basic validation: 26-35 chars, alphanumeric, no spaces
+      if (!addr || addr.length < 26 || addr.length > 35) return false;
+      return /^[a-zA-Z0-9]+$/.test(addr);
+    };
+
+    const validateAmount = (amt) => {
+      const num = parseFloat(amt);
+      return !isNaN(num) && num >= 0 && num <= 999999999;
+    };
+
+    // ============================================
+    // Data Management
+    // ============================================
+    const STORAGE_KEY = 'portfolio_entries_v1';
+
+    const loadData = () => {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error('Error loading data:', e);
+        return [];
+      }
+    };
+
+    const saveData = (data) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        return true;
+      } catch (e) {
+        console.error('Error saving data:', e);
+        showAlert('Failed to save data', 'error');
+        return false;
+      }
+    };
+
+    // ============================================
+    // UI Updates
+    // ============================================
+    const showAlert = (message, type = 'success') => {
+      const alertEl = document.getElementById('alert');
+      alertEl.textContent = message;
+      alertEl.className = `alert show ${type}`;
+      setTimeout(() => alertEl.classList.remove('show'), 4000);
+    };
+
+    const updateStats = () => {
+      const data = loadData();
+      const totalCount = data.length;
+      const totalValue = data.reduce((sum, entry) => sum + (parseFloat(entry.amount) || 0), 0);
+      const categories = new Set(data.map(e => e.category)).size;
+
+      document.getElementById('totalCount').textContent = totalCount;
+      document.getElementById('totalValue').textContent = totalValue.toFixed(8);
+      document.getElementById('categoryCount').textContent = categories;
+      document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString();
+    };
+
+    const renderTable = () => {
+      const data = loadData();
+      const table = document.getElementById('dataTable');
+      const tbody = document.getElementById('tableBody');
+      const placeholder = document.getElementById('tablePlaceholder');
+
+      tbody.innerHTML = '';
+
+      if (data.length === 0) {
+        table.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+
+      table.style.display = 'table';
+      placeholder.style.display = 'none';
+
+      data.forEach((entry, idx) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${sanitize(entry.dateAdded)}</td>
+          <td><code style="font-size: 0.85em; color: var(--muted);">${sanitize(entry.walletAddr.substring(0, 20))}...</code></td>
+          <td><span class="tag">${sanitize(entry.category)}</span></td>
+          <td>${parseFloat(entry.amount).toFixed(8)}</td>
+          <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${sanitize(entry.notes || '—')}</td>
+          <td><button class="btn-sm" onclick="deleteEntry(${idx})">Delete</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      updateStats();
+    };
+
+    // ============================================
+    // Event Handlers
+    // ============================================
+    const deleteEntry = (idx) => {
+      const data = loadData();
+      data.splice(idx, 1);
+      saveData(data);
+      renderTable();
+      showAlert('Entry deleted', 'success');
+    };
+
+    document.getElementById('entryForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const walletAddr = document.getElementById('walletAddr').value.trim();
+      const category = document.getElementById('category').value;
+      const amount = document.getElementById('amount').value;
+      const dateAdded = document.getElementById('dateAdded').value;
+      const notes = document.getElementById('notes').value.trim();
+
+      // Validation
+      if (!validateWalletAddress(walletAddr)) {
+        showAlert('Invalid wallet address format', 'error');
+        return;
+      }
+      if (!validateAmount(amount)) {
+        showAlert('Invalid amount', 'error');
+        return;
+      }
+      if (!category) {
+        showAlert('Please select a category', 'error');
+        return;
+      }
+
+      // Add entry
+      const data = loadData();
+      data.push({ walletAddr, category, amount, dateAdded, notes });
+      
+      if (saveData(data)) {
+        showAlert('Entry added successfully!', 'success');
+        document.getElementById('entryForm').reset();
+        document.getElementById('dateAdded').valueAsDate = new Date();
+        renderTable();
+      }
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const data = loadData();
+      if (data.length === 0) {
+        showAlert('No data to export', 'error');
+        return;
+      }
+
+      const headers = ['Date', 'Wallet Address', 'Category', 'Amount', 'Notes'];
+      const rows = data.map(e => [
+        e.dateAdded,
+        e.walletAddr,
+        e.category,
+        e.amount,
+        e.notes || ''
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(cell => `"${cell}"`).join(','))
+        .join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `portfolio_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+      showAlert('Exported successfully!', 'success');
+    });
+
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+      if (confirm('Are you sure? This will delete all entries.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderTable();
+        showAlert('All entries cleared', 'success');
+      }
+    });
+
+    // ============================================
+    // Initialize
+    // ============================================
+    document.getElementById('dateAdded').valueAsDate = new Date();
+    renderTable();
+  </script>
+</body>
+</html>
