@@ -1,2 +1,6 @@
-fastapi
-uvicorn
+# NEXUS Antikythera Recovery Dependencies
+# Safe, local-first, read-only public data only
+
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6

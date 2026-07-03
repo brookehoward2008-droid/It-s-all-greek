@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS Antikythera Recovery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff41;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #00aa22;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+        }
+        
+        .status-panel {
+            background: #1a1f3a;
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #00aa2255;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-label {
+            color: #00aa22;
+            font-weight: bold;
+        }
+        
+        .status-value {
+            color: #00ff41;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00aa22;
+            padding-bottom: 10px;
+        }
+        
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .puzzle-card {
+            background: #1a1f3a;
+            border: 1px solid #00aa22;
+            border-radius: 4px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .puzzle-card:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 10px #00ff4155;
+        }
+        
+        .puzzle-number {
+            color: #00ff41;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .puzzle-desc {
+            color: #00aa22;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .puzzle-rank {
+            color: #00ff41;
+            font-size: 0.8em;
+        }
+        
+        .api-endpoints {
+            background: #1a1f3a;
+            border: 1px solid #00aa22;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        
+        .endpoint {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #00aa2255;
+        }
+        
+        .endpoint:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .endpoint-name {
+            color: #00ff41;
+            font-weight: bold;
+            font-family: 'Monaco', monospace;
+            margin-bottom: 5px;
+        }
+        
+        .endpoint-desc {
+            color: #00aa22;
+            font-size: 0.9em;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #00aa22;
+        }
+        
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #00aa22;
+            text-align: center;
+            color: #00aa22;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ NEXUS ANTIKYTHERA</h1>
+            <p class="subtitle">LOCAL-FIRST RECOVERY SHELL | UNIVERSE 42 PLANNING</p>
+        </header>
+        
+        <div class="status-panel" id="status">
+            <div class="loading">
+                <span class="spinner">⟳</span> Loading status...
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📊 Public Puzzle Registry</h2>
+            <div class="puzzle-grid" id="puzzles">
+                <div class="loading">
+                    <span class="spinner">⟳</span> Loading puzzles...
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔍 API Endpoints</h2>
+            <div class="api-endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-name">GET /api/status</div>
+                    <div class="endpoint-desc">Service status and configuration</div>
+                </div>
+                <div class="endpoint">
+                    <div class="endpoint-name">GET /api/puzzles</div>
+                    <div class="endpoint-desc">Public BTC puzzle registry with Universe 42 ranking</div>
+                </div>
+                <div class="endpoint">
+                    <div class="endpoint-name">GET /api/formats</div>
+                    <div class="endpoint-desc">Bitcoin address format detection</div>
+                </div>
+                <div class="endpoint">
+                    <div class="endpoint-name">GET /api/universe42</div>
+                    <div class="endpoint-desc">Universe 42 normalized scan-ahead ranking</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Safe • Local-First • Read-Only Public Data • No Private Keys • No Wallet Automation</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Fetch and display status
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                document.getElementById('status').innerHTML = `
+                    <div class="status-item">
+                        <span class="status-label">Service</span>
+                        <span class="status-value">${data.service}</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Status</span>
+                        <span class="status-value">🟢 ${data.status.toUpperCase()}</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Port</span>
+                        <span class="status-value">${data.port}</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Mode</span>
+                        <span class="status-value">${data.mode}</span>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('status').innerHTML = `
+                    <div style="color: #ff4444;">
+                        ❌ Error loading status: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Fetch and display puzzles
+        async function loadPuzzles() {
+            try {
+                const response = await fetch('/api/puzzles');
+                const data = await response.json();
+                
+                if (data.puzzles.length === 0) {
+                    document.getElementById('puzzles').innerHTML = `
+                        <div style="grid-column: 1/-1; color: #00aa22; text-align: center; padding: 30px;">
+                            No puzzles loaded yet. Add puzzles via admin panel.
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const html = data.puzzles.map(puzzle => `
+                    <div class="puzzle-card">
+                        <div class="puzzle-number">Puzzle #${puzzle.puzzle_number}</div>
+                        <div class="puzzle-desc">${puzzle.description || 'No description'}</div>
+                        <div class="puzzle-rank">Rank: ${puzzle.universe_42_rank || 'N/A'}</div>
+                    </div>
+                `).join('');
+                document.getElementById('puzzles').innerHTML = html;
+            } catch (error) {
+                document.getElementById('puzzles').innerHTML = `
+                    <div style="grid-column: 1/-1; color: #ff4444;">
+                        ❌ Error loading puzzles: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStatus();
+            loadPuzzles();
+            // Refresh every 30 seconds
+            setInterval(() => {
+                loadStatus();
+                loadPuzzles();
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
