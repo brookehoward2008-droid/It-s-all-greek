@@ -1,74 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEXUS MASTER BUILD</title>
-  <style>
-    :root{
-      --bg:#05070a; --panel:#0b1118; --line:#193041; --text:#d7f2ff; --muted:#7fa2b5; --accent:#00e5cc; --accent2:#00ff88;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top,#0d1721 0%, #05070a 45%, #020305 100%);color:var(--text)}
-    .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 40px}
-    h1{margin:0 0 10px;font-size:clamp(28px,5vw,48px);letter-spacing:.08em}
-    .sub{color:var(--muted);max-width:750px;line-height:1.5;margin-bottom:22px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-    .card{background:rgba(11,17,24,.9);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
-    .card h2{font-size:18px;margin:0 0 10px}
-    .card p{color:var(--muted);line-height:1.45;font-size:14px;min-height:62px}
-    a.btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:12px;text-decoration:none;color:#031012;background:linear-gradient(90deg,var(--accent),var(--accent2));font-weight:700}
-    .path{font-family:Consolas,Monaco,monospace;color:#9ec9d9;font-size:12px;margin-top:10px;word-break:break-word}
-    .note{margin-top:20px;padding:14px 16px;background:#101923;border-left:4px solid var(--accent);border-radius:12px;color:var(--muted);line-height:1.5}
-    ul{margin:10px 0 0 18px;color:var(--muted)}
-    li{margin:6px 0}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050814">
+<title>Nexus Command Center</title>
+<style>
+:root{--bg:#050814;--panel:#0d1324;--panel2:#111a2d;--line:#23324f;--text:#eef6ff;--muted:#9badcc;--cyan:#4ff7df;--green:#77ffb2;--yellow:#ffd36e;--red:#ff7c96;--blue:#91a7ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top left,#17244a 0,#080d1c 38%,#03050d 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.side{padding:24px;border-right:1px solid var(--line);background:rgba(5,8,20,.78);position:sticky;top:0;height:100vh}.brand{display:flex;gap:12px;align-items:center;margin-bottom:26px}.mark{width:46px;height:46px;border:1px solid var(--cyan);border-radius:14px;display:grid;place-items:center;color:var(--cyan);font-weight:900;box-shadow:0 0 28px rgba(79,247,223,.18)}h1,h2,h3,p{margin-top:0}h1{font-size:22px;margin-bottom:2px}.muted,.brand p{color:var(--muted)}.nav{display:grid;gap:10px}.nav button,.btn,input,select,textarea{font:inherit}.nav button,.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:11px 13px;cursor:pointer}.nav button{text-align:left}.nav button.active,.btn.primary{border-color:var(--cyan);color:#03100f;background:linear-gradient(135deg,var(--cyan),var(--green));font-weight:800}.main{padding:28px;max-width:1280px;width:100%}.top{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:22px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan);font-weight:800}.section{display:none}.section.active{display:block}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}.two{grid-template-columns:1.1fr .9fr}.panel{background:rgba(13,19,36,.86);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.28)}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:12px}.pill{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:12px;color:var(--muted)}.pill.live{color:var(--green);border-color:rgba(119,255,178,.45)}.pill.local{color:var(--yellow);border-color:rgba(255,211,110,.45)}.pill.static{color:var(--blue);border-color:rgba(145,167,255,.45)}.pill.blocked{color:var(--red);border-color:rgba(255,124,150,.45)}.stat strong{display:block;font-size:30px}input,select,textarea{width:100%;border:1px solid var(--line);background:#070c18;color:var(--text);border-radius:12px;padding:11px;margin:6px 0 10px}textarea{min-height:88px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.list{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:14px;padding:12px;background:rgba(17,26,45,.72)}.item h4{margin:0 0 6px}.actions{display:flex;gap:10px;flex-wrap:wrap}.danger{color:var(--red)}code{background:#0b1222;border:1px solid var(--line);border-radius:6px;padding:2px 5px}pre{white-space:pre-wrap;background:#070c18;border:1px solid var(--line);border-radius:12px;padding:12px;overflow:auto}.small{font-size:13px;color:var(--muted)}@media(max-width:850px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.stats,.two,.row{grid-template-columns:1fr}.top{display:block}.actions{margin-top:12px}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>NEXUS MASTER BUILD</h1>
-    <div class="sub">One homepage. One archive. One clean place to start. Open the main build from here, use the local Python branch when you need it, and keep all earlier experiments and backups parked in archive.</div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>Main browser build</h2>
-        <p>Your current primary Nexus shell. This is the clean launch target for the HTML branch.</p>
-        <a class="btn" href="app/nexus-main-browser-v10.html">Open main build</a>
-        <div class="path">app/nexus-main-browser-v10.html</div>
-      </div>
-
-      <div class="card">
-        <h2>Archive</h2>
-        <p>Older browser versions, prototypes, research files, installers, and original bundles live here instead of being mixed into the working app.</p>
-        <a class="btn" href="docs/cleanup-report.md">Open cleanup report</a>
-        <div class="path">docs/cleanup-report.md</div>
-      </div>
-
-      <div class="card">
-        <h2>Local Python branch</h2>
-        <p>Desktop and agent experiments are not included yet in this GitHub publish. This repo currently ships the cleaned browser branch and documentation.</p>
-        <a class="btn" href="docs/README_FIRST.md">Open package notes</a>
-        <div class="path">docs/README_FIRST.md</div>
-      </div>
-
-      <div class="card">
-        <h2>Docs</h2>
-        <p>Readme, cleanup report, and inventory are grouped together so the project can still explain itself.</p>
-        <a class="btn" href="docs/README_FIRST.md">Open docs</a>
-        <div class="path">docs/README_FIRST.md</div>
-      </div>
-    </div>
-
-    <div class="note">
-      Best launch method: run the local server launcher in the <strong>launch</strong> folder, then open <strong>http://localhost:8080</strong>.<br><br>
-      This package is <strong>not</strong> an R Shiny project. The commands using <code>renv::restore()</code> and <code>shiny::runApp()</code> do not match the files in this build.
-    </div>
-
-    <ul>
-      <li>Main app branch: browser HTML</li>
-      <li>Included here: cleaned browser build and docs</li>
-      <li>Not yet published here: Python experiments and heavy archive bundles</li>
-    </ul>
-  </div>
+<noscript>Nexus needs JavaScript enabled.</noscript>
+<div class="app">
+<aside class="side">
+<div class="brand"><div class="mark">NX</div><div><h1>Nexus</h1><p>Command Center</p></div></div>
+<nav class="nav" id="nav">
+<button class="active" data-section="dashboard">Dashboard</button>
+<button data-section="research">Research</button>
+<button data-section="live">Live Data</button>
+<button data-section="tasks">Build Tasks</button>
+<button data-section="evidence">Evidence</button>
+<button data-section="settings">Settings</button>
+</nav>
+<div class="panel" style="margin-top:18px"><span class="eyebrow">Truth Mode</span><p class="small">Panels are labeled live, local, static, blocked, or not configured. No fake live data.</p></div>
+</aside>
+<main class="main">
+<header class="top"><div><span class="eyebrow">Full-use interface</span><h2 id="title">Dashboard</h2></div><div class="actions"><button class="btn primary" id="refresh">Refresh live data</button><button class="btn" id="exportBtn">Export JSON</button></div></header>
+<section id="dashboard" class="section active"><div class="grid stats" id="stats"></div><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Tonight</span><h3>Next moves</h3></div><span class="pill local">local</span></div><div id="nextMoves" class="list"></div></article><article class="panel"><div class="panel-head"><div><span class="eyebrow">Milestone</span><h3>How far you got</h3></div><span class="pill static">static</span></div><p>The Antikythera no-icon executable is treated as the last known milestone and launcher artifact, not the full app source.</p><p class="small">Drive file: <code>14vqvK5bfFGMUp-tbkAlESbqneMtfglnl</code></p></article></div></section>
+<section id="research" class="section"><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Sources</span><h3>Research source tracker</h3></div><span class="pill local">local</span></div><form id="sourceForm"><input name="title" placeholder="Source title" required><input name="url" placeholder="URL or Drive note"><div class="row"><select name="status"><option>primary</option><option>supporting</option><option>needs-review</option><option>archive</option></select><input name="kind" placeholder="kind, e.g. session, forensics, code"></div><button class="btn primary">Add source</button></form></article><article class="panel"><h3>Sources</h3><div id="sources" class="list"></div></article></div></section>
+<section id="live" class="section"><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Public feeds</span><h3>Live data checks</h3></div><span class="pill live">live when fetch succeeds</span></div><p class="small">These are public browser fetches. If they fail, Nexus says unavailable instead of pretending.</p><div id="liveList" class="list"></div></article><article class="panel"><h3>Live data rule</h3><p>A panel is factual only when a named source returns current data. Anything else must be marked static, local, blocked, or unknown.</p></article></div></section>
+<section id="tasks" class="section"><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Build</span><h3>Task board</h3></div><span class="pill local">local</span></div><form id="taskForm"><input name="title" placeholder="Task title" required><div class="row"><select name="lane"><option>research</option><option>build</option><option>live-data</option><option>security</option><option>ship</option></select><select name="state"><option>todo</option><option>doing</option><option>blocked</option><option>done</option></select></div><button class="btn primary">Add task</button></form></article><article class="panel"><h3>Tasks</h3><div id="taskList" class="list"></div></article></div></section>
+<section id="evidence" class="section"><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Evidence</span><h3>Truth-state tracker</h3></div><span class="pill local">local</span></div><form id="evidenceForm"><textarea name="claim" placeholder="Claim" required></textarea><textarea name="proof" placeholder="Evidence or source" required></textarea><select name="truth"><option>verified</option><option>likely</option><option>unknown</option><option>blocked</option><option>false</option></select><button class="btn primary">Add evidence</button></form></article><article class="panel"><h3>Evidence</h3><div id="evidenceList" class="list"></div></article></div></section>
+<section id="settings" class="section"><div class="grid two"><article class="panel"><div class="panel-head"><div><span class="eyebrow">Supabase-ready</span><h3>Backend config guardrail</h3></div><span class="pill static">not connected</span></div><p class="small">Only publishable/anon-style frontend keys belong here. Never paste service-role or secret keys into a browser app.</p><form id="configForm"><input name="url" placeholder="Supabase project URL"><input name="key" placeholder="Publishable key only"><button class="btn primary">Save config locally</button></form><p id="configStatus" class="small"></p></article><article class="panel"><h3>Import backup</h3><textarea id="importBox" placeholder="Paste exported Nexus JSON here"></textarea><button class="btn" id="importBtn">Import JSON</button><button class="btn danger" id="resetBtn">Reset local data</button></article></div></section>
+</main>
+</div>
+<script>
+const STORE='nexus-remote-v1', CONFIG='nexus-supabase-config-v1';
+const seed={sources:[{id:id(),title:'NEXUS Antikythera no-icon backup executable',url:'https://drive.google.com/file/d/14vqvK5bfFGMUp-tbkAlESbqneMtfglnl/view?usp=drivesdk',status:'primary',kind:'release artifact'},{id:id(),title:'Nexus Google Drive project folder',url:'https://drive.google.com/drive/folders/1VkZOg9kZ4WHQ8aY_i8gI1cLLRxgG0r4j',status:'primary',kind:'research container'},{id:id(),title:'NEXUS_RESEARCH_DATABASES.md',url:'Drive search result',status:'supporting',kind:'research inventory'}],tasks:[{id:id(),title:'Trace Antikythera launcher back to real source files',lane:'research',state:'doing'},{id:id(),title:'Keep working browser app separate from duplicate builds',lane:'build',state:'todo'},{id:id(),title:'Connect only factual public live panels first',lane:'live-data',state:'todo'},{id:id(),title:'Do not expose service-role or secret keys in frontend',lane:'security',state:'todo'},{id:id(),title:'Publish stable interface from GitHub',lane:'ship',state:'todo'}],evidence:[{id:id(),claim:'The no-icon Antikythera artifact is not the full app; it is a small launcher artifact.',proof:'Static inspection: 5,632 bytes, PE32 .NET GUI assembly, embedded strings included launcher-like terms.',truth:'likely'}],live:[]};
+let state=load();
+function id(){return crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random())}function load(){try{return JSON.parse(localStorage.getItem(STORE))||seed}catch{return seed}}function save(){localStorage.setItem(STORE,JSON.stringify(state))}function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){renderStats();renderSources();renderTasks();renderEvidence();renderLive();renderNext()}function renderStats(){stats.innerHTML=[['Sources',state.sources.length,'local'],['Tasks',state.tasks.length,'local'],['Evidence',state.evidence.length,'local'],['Live feeds',state.live.length,'live']].map(x=>`<article class="panel stat"><span class="pill ${x[2]}">${x[2]}</span><strong>${x[1]}</strong><p>${x[0]}</p></article>`).join('')}function renderNext(){nextMoves.innerHTML=state.tasks.filter(t=>t.state!=='done').slice(0,5).map(t=>`<div class="item"><h4>${esc(t.title)}</h4><span class="pill local">${esc(t.lane)} / ${esc(t.state)}</span></div>`).join('')||'<p class="small">No open tasks.</p>'}
+function renderSources(){sources.innerHTML=state.sources.map(s=>`<div class="item"><h4>${esc(s.title)}</h4><p class="small">${esc(s.url)}</p><span class="pill local">${esc(s.status)}</span> <span class="pill static">${esc(s.kind)}</span><p><button class="btn" onclick="del('sources','${s.id}')">Delete</button></p></div>`).join('')}function renderTasks(){taskList.innerHTML=state.tasks.map(t=>`<div class="item"><h4>${esc(t.title)}</h4><span class="pill local">${esc(t.lane)}</span> <span class="pill ${t.state==='blocked'?'blocked':'local'}">${esc(t.state)}</span><p><button class="btn" onclick="cycle('${t.id}')">Next state</button> <button class="btn" onclick="del('tasks','${t.id}')">Delete</button></p></div>`).join('')}function renderEvidence(){evidenceList.innerHTML=state.evidence.map(e=>`<div class="item"><h4>${esc(e.claim)}</h4><p>${esc(e.proof)}</p><span class="pill ${e.truth==='verified'?'live':e.truth==='blocked'?'blocked':'static'}">${esc(e.truth)}</span><p><button class="btn" onclick="del('evidence','${e.id}')">Delete</button></p></div>`).join('')}function renderLive(){liveList.innerHTML=state.live.length?state.live.map(l=>`<div class="item"><h4>${esc(l.name)}</h4><p>${esc(l.value)}</p><span class="pill ${l.ok?'live':'blocked'}">${esc(l.status)}</span><p class="small">${esc(l.source)} · ${esc(l.time)}</p></div>`).join(''):'<p class="small">Click Refresh live data.</p>'}
+function del(k,i){state[k]=state[k].filter(x=>x.id!==i);save();render()}function cycle(i){const order=['todo','doing','blocked','done'];const t=state.tasks.find(x=>x.id===i);t.state=order[(order.indexOf(t.state)+1)%order.length];save();render()}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(b.dataset.section).classList.add('active');title.textContent=b.textContent});
+sourceForm.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);state.sources.unshift({id:id(),title:f.get('title'),url:f.get('url'),status:f.get('status'),kind:f.get('kind')});e.target.reset();save();render()};taskForm.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);state.tasks.unshift({id:id(),title:f.get('title'),lane:f.get('lane'),state:f.get('state')});e.target.reset();save();render()};evidenceForm.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);state.evidence.unshift({id:id(),claim:f.get('claim'),proof:f.get('proof'),truth:f.get('truth')});e.target.reset();save();render()};
+async function refreshLive(){const out=[];async function check(name,source,url,pick){try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();out.push({name,source,value:pick(j),ok:true,status:'live',time:new Date().toLocaleString()})}catch(e){out.push({name,source,value:e.message,ok:false,status:'unavailable',time:new Date().toLocaleString()})}}await check('Bitcoin price','CoinDesk public API','https://api.coindesk.com/v1/bpi/currentprice.json',j=>'USD '+j.bpi.USD.rate);await check('GitHub public API health','GitHub API','https://api.github.com',j=>'current_user_url present: '+Boolean(j.current_user_url));state.live=out;save();renderLive();renderStats()}refresh.onclick=refreshLive;
+exportBtn.onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nexus-backup.json';a.click();URL.revokeObjectURL(a.href)};importBtn.onclick=()=>{try{state=JSON.parse(importBox.value);save();render();importBox.value=''}catch(e){alert('Invalid JSON: '+e.message)}};resetBtn.onclick=()=>{if(confirm('Reset local Nexus data?')){state=structuredClone(seed);save();render()}};configForm.onsubmit=e=>{e.preventDefault();const f=new FormData(e.target),key=String(f.get('key')||'');if(/service|secret|sb_secret/i.test(key)){configStatus.textContent='Blocked: do not store service-role or secret keys in the frontend.';return}localStorage.setItem(CONFIG,JSON.stringify({url:f.get('url'),key}));configStatus.textContent='Saved locally. Backend not connected until Supabase project is confirmed.'};
+render();
+</script>
 </body>
 </html>
